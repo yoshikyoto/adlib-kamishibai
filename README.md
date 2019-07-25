@@ -3,6 +3,7 @@
 ## 動かす
 
 ```
+npm install
 npm run sandbox
 ```
 
