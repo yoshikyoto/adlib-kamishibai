@@ -8,7 +8,8 @@
     "@akashic/akashic-sandbox": "^0.15.0"
   },
   "scripts": {
-    "sandbox": "akashic-sandbox"
+    "sandbox": "akashic-sandbox",
+    "scan-asset": "akashic scan asset"
   },
   "repository": {
     "type": "git",
