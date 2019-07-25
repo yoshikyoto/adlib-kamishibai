@@ -5,11 +5,13 @@
   "main": "main.js",
   "dependencies": {},
   "devDependencies": {
-    "@akashic/akashic-sandbox": "^0.15.0"
+    "@akashic/akashic-sandbox": "^0.15.0",
+    "@akashic/akashic-cli": "^1.7.3"
   },
   "scripts": {
     "sandbox": "akashic-sandbox",
-    "scan-asset": "akashic scan asset"
+    "scan-asset": "akashic scan asset",
+    "build": "akashic export html --magnify --output ./dist"
   },
   "repository": {
     "type": "git",
