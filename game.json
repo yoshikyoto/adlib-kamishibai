@@ -14,6 +14,24 @@
 			"width": 320,
 			"height": 180,
 			"path": "image/paper1.jpg"
+		},
+		"paper2": {
+			"type": "image",
+			"width": 320,
+			"height": 240,
+			"path": "image/paper2.jpg"
+		},
+		"paper3": {
+			"type": "image",
+			"width": 320,
+			"height": 226,
+			"path": "image/paper3.jpg"
+		},
+		"paper4": {
+			"type": "image",
+			"width": 320,
+			"height": 210,
+			"path": "image/paper4.jpg"
 		}
 	},
 	"environment": {
