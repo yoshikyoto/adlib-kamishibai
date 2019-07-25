@@ -8,7 +8,7 @@
     "@akashic/akashic-sandbox": "^0.15.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "sandbox": "akashic-sandbox"
   },
   "repository": {
     "type": "git",
