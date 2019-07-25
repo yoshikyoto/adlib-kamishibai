@@ -1,6 +1,6 @@
 function main() {
-  var paperAssetNames = ["paper1", "paper2", "paper3", "paper4"];
-  var scene = new g.Scene({
+  let paperAssetNames = ["paper1", "paper2", "paper3", "paper4"];
+  let scene = new g.Scene({
     game: g.game,
     assetIds: paperAssetNames,
   });
@@ -15,9 +15,8 @@ function autoPaper(scene, interval, paperAssetNames) {
     console.log("finish");
     return;
   }
-  var paperAssetName = paperAssetNames[0];
-  console.log(paperAssetNames.shift());
-  var paper = new g.Sprite({
+  let paperAssetName = paperAssetNames.shift();
+  let paper = new g.Sprite({
     scene: scene,
     src: scene.assets[paperAssetName],
   });
@@ -28,7 +27,7 @@ function autoPaper(scene, interval, paperAssetNames) {
 }
 
 function startTimer(scene, second, onFinish) {
-  const timerFont = new g.DynamicFont({
+  let timerFont = new g.DynamicFont({
     game: g.game,
     fontFamily: g.FontFamily.SansSerif,
     size: 15,
