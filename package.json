@@ -1,0 +1,23 @@
+{
+  "name": "adlib-kamishibai",
+  "version": "1.0.0",
+  "description": "アドリブ紙芝居",
+  "main": "main.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@akashic/akashic-sandbox": "^0.15.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yoshikyoto/adlib-kamishibai.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yoshikyoto/adlib-kamishibai/issues"
+  },
+  "homepage": "https://github.com/yoshikyoto/adlib-kamishibai#readme"
+}
