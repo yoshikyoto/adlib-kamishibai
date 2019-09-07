@@ -5,8 +5,8 @@
   "main": "main.js",
   "dependencies": {},
   "devDependencies": {
-    "@akashic/akashic-sandbox": "^0.15.0",
-    "@akashic/akashic-cli": "^1.7.3"
+    "@akashic/akashic-cli": "^1.7.19",
+    "@akashic/akashic-sandbox": "^0.15.0"
   },
   "scripts": {
     "sandbox": "akashic-sandbox",
