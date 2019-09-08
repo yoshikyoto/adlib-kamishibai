@@ -6,22 +6,31 @@ function main() {
   const TITLE_ASSET_ID = 'title'
   const SUB_TITLE = '桃太郎編A'
   const PAPER_ASSET_IDS = ['paper1', 'paper2', 'paper3', 'paper4']
-  const TITLE_SECOND = '5'
+  const TITLE_SECOND = 5
+  const DESCRIPTION_FRAME_ASSET_ID = 'frame'
+  const DESCRIPTION_SECOND = 10
   // 紙芝居の1ページあたりの秒数
   const PAPER_INTERVAL = 10
 
   // 各シーンの生成
 
   // タイトルシーン
-  let titleScene = createTitleScene(TITLE_ASSET_ID, SUB_TITLE)
+  const titleScene = createTitleScene(TITLE_ASSET_ID, SUB_TITLE)
   g.game.pushScene(titleScene)
 
   // TITLE_SECOND 秒タイトルを表示したら次のシーンへ
   titleScene.setTimeout(() => {
-    // 紙芝居シーン
-    let paperScene = createPaperScene(PAPER_INTERVAL, PAPER_ASSET_IDS)
-    g.game.pushScene(paperScene)
-  }, TITLE_SECOND * 1000);
+    // DESCRIPTION_SECOND 秒説明を表示したら次のシーンへ
+    const descriptionScene = createDescriptionScene(DESCRIPTION_FRAME_ASSET_ID)
+    g.game.pushScene(descriptionScene)
+
+    descriptionScene.setTimeout(() => {
+      // 紙芝居シーン
+      const paperScene = createPaperScene(PAPER_INTERVAL, PAPER_ASSET_IDS)
+      g.game.pushScene(paperScene)
+
+    }, DESCRIPTION_SECOND * 1000); // 説明の表示されている時間
+  }, TITLE_SECOND * 1000); // タイトルの表示されている秒数
 }
 
 /**
@@ -61,6 +70,61 @@ function createTitleScene(titleAssetId, subTitleText) {
     subTitle.y = title.y + title.height + subTitle.height
     scene.append(subTitle);
   })
+  return scene
+}
+
+/**
+ * ゲームの説明のシーンを作成して返す
+ */
+function createDescriptionScene(descriptionFrameAssetId) {
+  const scene = new g.Scene({
+    game: g.game,
+    assetIds: [descriptionFrameAssetId],
+  })
+
+  scene.loaded.add(() => {
+    const descriptionFrame = new g.Sprite({
+      scene: scene,
+      src: scene.assets[descriptionFrameAssetId],
+    })
+    // どセンターに表示されるように
+    descriptionFrame.x = (g.game.width - descriptionFrame.width) / 2
+    descriptionFrame.y = (g.game.height - descriptionFrame.height) / 2
+
+    const descriptionFont = new g.DynamicFont({
+      game: g.game,
+      fontFamily: g.FontFamily.SansSerif,
+      size: 24,
+    })
+
+    const description1 = new g.Label({
+      scene: scene,
+      font: descriptionFont,
+      text: '4枚の紙芝居が流れます',
+      fontSize: 24,
+      textColor: "black",
+      // この x, y が決め打ちなのはあまり良くない
+      x: 50,
+      y: 50,
+    });
+    descriptionFrame.append(description1)
+
+    const description2 = new g.Label({
+      scene: scene,
+      font: descriptionFont,
+      text: 'アドリブで乗り切れ！',
+      fontSize: 24,
+      textColor: "black",
+      // この x, y が決め打ちなのはあまり良くない
+      x: 50,
+      y: 100
+    });
+    descriptionFrame.append(description2)
+    
+    scene.append(descriptionFrame)
+  })  
+
+
   return scene
 }
 

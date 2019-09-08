@@ -44,6 +44,12 @@
 			"width": 878,
 			"height": 350,
 			"path": "image/title2x.png"
+		},
+		"frame": {
+			"type": "image",
+			"width": 500,
+			"height": 313,
+			"path": "image/frame.png"
 		}
 	},
 	"environment": {
