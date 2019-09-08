@@ -1,28 +1,31 @@
+/**
+ * エントリーポイント
+ */
 function main() {
-  let paperAssetNames = ["paper1", "paper2", "paper3", "paper4"];
+  let paperAssetIds = ["paper1", "paper2", "paper3", "paper4"];
   let scene = new g.Scene({
     game: g.game,
-    assetIds: paperAssetNames,
+    assetIds: paperAssetIds,
   });
   scene.loaded.add(function() {
-    autoPaper(scene, 10, paperAssetNames);
+    autoPaper(scene, 10, paperAssetIds);
   });
   g.game.pushScene(scene);
 }
 
-function autoPaper(scene, interval, paperAssetNames) {
-  if (paperAssetNames.length === 0) {
+function autoPaper(scene, interval, paperAssetIds) {
+  if (paperAssetIds.length === 0) {
     console.log("finish");
     return;
   }
-  let paperAssetName = paperAssetNames.shift();
+  let paperAssetId = paperAssetIds.shift();
   let paper = new g.Sprite({
     scene: scene,
-    src: scene.assets[paperAssetName],
+    src: scene.assets[paperAssetId],
   });
   scene.append(paper);
   startTimer(scene, interval, function() {
-    autoPaper(scene, interval, paperAssetNames);
+    autoPaper(scene, interval, paperAssetIds);
   });
 }
 
