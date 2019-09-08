@@ -15,19 +15,25 @@ function main() {
 
   // 各シーンの生成
 
-  // タイトルシーン
+  // タイトルシーン生成
   const titleScene = createTitleScene(TITLE_ASSET_ID, SUB_TITLE, BGM_ASSET_ID)
+  // タイトルシーン表示
   g.game.pushScene(titleScene)
+  // BGM鳴らす
+  var titleSceneBgm
+  titleScene.loaded.add(() => {
+    titleSceneBgm = titleScene.assets[BGM_ASSET_ID].play()
+  })
 
-  // 次のシーンへ
   titleScene.setTimeout(() => {
 
-    // ゲーム説明シーン
+    // ゲーム説明シーン生成
     const descriptionScene = createDescriptionScene(DESCRIPTION_FRAME_ASSET_ID)
-    g.game.pushScene(descriptionScene)
-    // titleScene.gotoScene(descriptionScene)
-
-    // 次のシーンへ
+    // ゲーム説明シーンへ移動
+    titleScene.gotoScene(descriptionScene)
+    // BGMストップ
+    titleSceneBgm.stop()
+    
     descriptionScene.setTimeout(() => {
 
       // 紙芝居シーン（最後のシーン）
@@ -74,9 +80,6 @@ function createTitleScene(titleAssetId, subTitleText, bgmAssetId) {
     subTitle.x = title.x + title.width - subTitle.width
     subTitle.y = title.y + title.height + subTitle.height
     scene.append(subTitle);
-
-    // BGM鳴らす
-    scene.assets[bgmAssetId].play()
   })
   return scene
 }
