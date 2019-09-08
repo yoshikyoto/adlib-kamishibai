@@ -62,6 +62,24 @@
 			"path": "audio/whistle",
 			"systemId": "sound",
 			"duration": 1407
+		},
+		"clock": {
+			"type": "image",
+			"width": 38,
+			"height": 38,
+			"path": "image/clock.png"
+		},
+		"numbersBlack": {
+			"type": "image",
+			"width": 364,
+			"height": 32,
+			"path": "image/numbersBlack.png"
+		},
+		"numbersRed": {
+			"type": "image",
+			"width": 364,
+			"height": 32,
+			"path": "image/numbersRed.png"
 		}
 	},
 	"environment": {
