@@ -23,25 +23,39 @@ function main() {
 /**
  * タイトルのシーンを作成して返す
  */
-function createTitleScene(titleAssetId, subTitle) {
+function createTitleScene(titleAssetId, subTitleText) {
   const scene = new g.Scene({
     game: g.game,
+    assetIds: [titleAssetId],
   })
-  // タイトル
   scene.loaded.add(function() {
-    const timerLabel = new g.Label({
+    // タイトル
+    const title = new g.Sprite({
+      scene: scene,
+      src: scene.assets[titleAssetId],
+    });
+    // どセンターに表示されるように
+    title.x = (g.game.width - title.width) / 2
+    title.y = (g.game.height - title.height) / 2
+    scene.append(title)
+    
+    // サブタイトル
+    const subTitle = new g.Label({
       scene: scene,
       font: new g.DynamicFont({
         game: g.game,
         fontFamily: g.FontFamily.SansSerif,
-        size: 64,
+        size: 24,
       }),
-      text: 'アドリブ紙芝居',
-      fontSize: 64,
+      text: subTitleText,
+      fontSize: 24,
       textColor: "black",
       textAlign: g.TextAlign.Center,
-   });
-   scene.append(timerLabel);
+    });
+    // タイトルの右下に表示
+    subTitle.x = title.x + title.width - subTitle.width
+    subTitle.y = title.y + title.height + subTitle.height
+    scene.append(subTitle);
   })
   return scene
 }
