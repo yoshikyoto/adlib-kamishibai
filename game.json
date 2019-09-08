@@ -32,6 +32,18 @@
 			"width": 640,
 			"height": 360,
 			"path": "image/paper4.jpg"
+		},
+		"title": {
+			"type": "image",
+			"width": 439,
+			"height": 175,
+			"path": "image/title.png"
+		},
+		"title2x": {
+			"type": "image",
+			"width": 878,
+			"height": 350,
+			"path": "image/title2x.png"
 		}
 	},
 	"environment": {

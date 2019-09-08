@@ -2,22 +2,28 @@
  * エントリーポイント
  */
 function main() {
+  // 定数
+  const TITLE_ASSET_ID = 'title'
+  const SUB_TITLE = '桃太郎編A'
+  const PAPER_ASSET_IDS = ['paper1', 'paper2', 'paper3', 'paper4']
   // 紙芝居の1ページあたりの秒数
   const PAPER_INTERVAL = 10
 
+  // 各シーンの生成
+
   // タイトルシーンを作成
-  let titleScene = createTitleScene()
+  let titleScene = createTitleScene(TITLE_ASSET_ID, SUB_TITLE)
   g.game.pushScene(titleScene)
   
   // 紙芝居シーンを作成
-  let paperScene = createPaperScene(PAPER_INTERVAL)
-  //g.game.pushScene(paperScene)
+  let paperScene = createPaperScene(PAPER_INTERVAL, PAPER_ASSET_IDS)
+  // g.game.pushScene(paperScene)
 }
 
 /**
  * タイトルのシーンを作成して返す
  */
-function createTitleScene() {
+function createTitleScene(titleAssetId, subTitle) {
   const scene = new g.Scene({
     game: g.game,
   })
@@ -28,10 +34,10 @@ function createTitleScene() {
       font: new g.DynamicFont({
         game: g.game,
         fontFamily: g.FontFamily.SansSerif,
-        size: 15,
+        size: 64,
       }),
       text: 'アドリブ紙芝居',
-      fontSize: 15,
+      fontSize: 64,
       textColor: "black",
       textAlign: g.TextAlign.Center,
    });
@@ -43,8 +49,7 @@ function createTitleScene() {
 /**
  * 紙芝居のシーンを作成して返す
  */
-function createPaperScene(paperInterval) {
-  let paperAssetIds = ["paper1", "paper2", "paper3", "paper4"];
+function createPaperScene(paperInterval, paperAssetIds) {
   let scene = new g.Scene({
     game: g.game,
     assetIds: paperAssetIds,
@@ -91,6 +96,7 @@ function startTimer(scene, second, onFinish) {
   var timerInterval = scene.setInterval(function() {
     second--;
     timerLabel.text = String(second);
+    // text を変更したら invalidate メソッドで再評価させないといけない
     timerLabel.invalidate();
     // 0になったらタイマーを止める
     if(second === 0) {
