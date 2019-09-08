@@ -1,6 +1,6 @@
 {
 	"width": 640,
-	"height": 380,
+	"height": 360,
 	"fps": 30,
 	"main": "./main.js",
 	"assets": {
@@ -11,26 +11,26 @@
 		},
 		"paper1": {
 			"type": "image",
-			"width": 320,
-			"height": 180,
+			"width": 640,
+			"height": 360,
 			"path": "image/paper1.jpg"
 		},
 		"paper2": {
 			"type": "image",
-			"width": 320,
-			"height": 240,
+			"width": 640,
+			"height": 360,
 			"path": "image/paper2.jpg"
 		},
 		"paper3": {
 			"type": "image",
-			"width": 320,
-			"height": 226,
+			"width": 640,
+			"height": 360,
 			"path": "image/paper3.jpg"
 		},
 		"paper4": {
 			"type": "image",
-			"width": 320,
-			"height": 210,
+			"width": 640,
+			"height": 360,
 			"path": "image/paper4.jpg"
 		}
 	},
