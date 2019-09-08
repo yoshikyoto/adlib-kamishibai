@@ -54,7 +54,7 @@
 		"bgm": {
 			"type": "audio",
 			"path": "audio/bgm",
-			"systemId": "sound",
+			"systemId": "music",
 			"duration": 103747
 		}
 	},

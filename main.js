@@ -3,6 +3,7 @@
  */
 function main() {
   // 定数
+  const BGM_ASSET_ID = 'bgm'
   const TITLE_ASSET_ID = 'title'
   const SUB_TITLE = '桃太郎編A'
   const PAPER_ASSET_IDS = ['paper1', 'paper2', 'paper3', 'paper4']
@@ -15,31 +16,35 @@ function main() {
   // 各シーンの生成
 
   // タイトルシーン
-  const titleScene = createTitleScene(TITLE_ASSET_ID, SUB_TITLE)
+  const titleScene = createTitleScene(TITLE_ASSET_ID, SUB_TITLE, BGM_ASSET_ID)
   g.game.pushScene(titleScene)
 
-  // TITLE_SECOND 秒タイトルを表示したら次のシーンへ
+  // 次のシーンへ
   titleScene.setTimeout(() => {
-    // DESCRIPTION_SECOND 秒説明を表示したら次のシーンへ
+
+    // ゲーム説明シーン
     const descriptionScene = createDescriptionScene(DESCRIPTION_FRAME_ASSET_ID)
     g.game.pushScene(descriptionScene)
+    // titleScene.gotoScene(descriptionScene)
 
+    // 次のシーンへ
     descriptionScene.setTimeout(() => {
-      // 紙芝居シーン
+
+      // 紙芝居シーン（最後のシーン）
       const paperScene = createPaperScene(PAPER_INTERVAL, PAPER_ASSET_IDS)
       g.game.pushScene(paperScene)
 
-    }, DESCRIPTION_SECOND * 1000); // 説明の表示されている時間
+    }, DESCRIPTION_SECOND * 1000); // ゲーム説明の表示されている時間
   }, TITLE_SECOND * 1000); // タイトルの表示されている秒数
 }
 
 /**
  * タイトルのシーンを作成して返す
  */
-function createTitleScene(titleAssetId, subTitleText) {
+function createTitleScene(titleAssetId, subTitleText, bgmAssetId) {
   const scene = new g.Scene({
     game: g.game,
-    assetIds: [titleAssetId],
+    assetIds: [titleAssetId, bgmAssetId],
   })
   scene.loaded.add(() => {
     // タイトル
@@ -69,6 +74,9 @@ function createTitleScene(titleAssetId, subTitleText) {
     subTitle.x = title.x + title.width - subTitle.width
     subTitle.y = title.y + title.height + subTitle.height
     scene.append(subTitle);
+
+    // BGM鳴らす
+    scene.assets[bgmAssetId].play()
   })
   return scene
 }
