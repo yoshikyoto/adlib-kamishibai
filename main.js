@@ -6,18 +6,22 @@ function main() {
   const TITLE_ASSET_ID = 'title'
   const SUB_TITLE = '桃太郎編A'
   const PAPER_ASSET_IDS = ['paper1', 'paper2', 'paper3', 'paper4']
+  const TITLE_SECOND = '5'
   // 紙芝居の1ページあたりの秒数
   const PAPER_INTERVAL = 10
 
   // 各シーンの生成
 
-  // タイトルシーンを作成
+  // タイトルシーン
   let titleScene = createTitleScene(TITLE_ASSET_ID, SUB_TITLE)
   g.game.pushScene(titleScene)
-  
-  // 紙芝居シーンを作成
-  let paperScene = createPaperScene(PAPER_INTERVAL, PAPER_ASSET_IDS)
-  // g.game.pushScene(paperScene)
+
+  // TITLE_SECOND 秒タイトルを表示したら次のシーンへ
+  titleScene.setTimeout(() => {
+    // 紙芝居シーン
+    let paperScene = createPaperScene(PAPER_INTERVAL, PAPER_ASSET_IDS)
+    g.game.pushScene(paperScene)
+  }, TITLE_SECOND * 1000);
 }
 
 /**
@@ -28,7 +32,7 @@ function createTitleScene(titleAssetId, subTitleText) {
     game: g.game,
     assetIds: [titleAssetId],
   })
-  scene.loaded.add(function() {
+  scene.loaded.add(() => {
     // タイトル
     const title = new g.Sprite({
       scene: scene,
