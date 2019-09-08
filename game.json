@@ -56,6 +56,12 @@
 			"path": "audio/bgm",
 			"systemId": "music",
 			"duration": 103747
+		},
+		"whistle": {
+			"type": "audio",
+			"path": "audio/whistle",
+			"systemId": "sound",
+			"duration": 1407
 		}
 	},
 	"environment": {
