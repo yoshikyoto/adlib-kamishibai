@@ -7,11 +7,12 @@ function main() {
   const TITLE_ASSET_ID = 'title'
   const SUB_TITLE = '桃太郎編A'
   const PAPER_ASSET_IDS = ['paper1', 'paper2', 'paper3', 'paper4']
-  const TITLE_SECOND = 5
+  const TITLE_SECOND = 10
   const DESCRIPTION_FRAME_ASSET_ID = 'frame'
   const DESCRIPTION_SECOND = 10
   // 紙芝居の1ページあたりの秒数
   const PAPER_INTERVAL = 10
+  const WHISTLE_SE_ASSET_ID = 'whistle'
 
   // 各シーンの生成
 
@@ -19,8 +20,8 @@ function main() {
   const titleScene = createTitleScene(TITLE_ASSET_ID, SUB_TITLE, BGM_ASSET_ID)
   // タイトルシーン表示
   g.game.pushScene(titleScene)
-  // 次のシーン移動時にBGMを止める必要があるので
-  // createTitleScene の外側で BGM を再生している
+  // 次のシーン移動時にBGMを止めるので、
+  // 簡単のために createTitleScene の外側で BGM を再生している
   var titleSceneBgm
   titleScene.loaded.add(() => {
     titleSceneBgm = titleScene.assets[BGM_ASSET_ID].play()
@@ -36,7 +37,7 @@ function main() {
     
     descriptionScene.setTimeout(() => {
       // 紙芝居シーン（最後のシーン）
-      const paperScene = createPaperScene(PAPER_INTERVAL, PAPER_ASSET_IDS, BGM_ASSET_ID)
+      const paperScene = createPaperScene(PAPER_INTERVAL, PAPER_ASSET_IDS, BGM_ASSET_ID, WHISTLE_SE_ASSET_ID)
       g.game.pushScene(paperScene)
 
     }, DESCRIPTION_SECOND * 1000) // ゲーム説明の表示されている時間
@@ -140,24 +141,24 @@ function createDescriptionScene(descriptionFrameAssetId) {
 /**
  * 紙芝居のシーンを作成して返す
  */
-function createPaperScene(paperInterval, paperAssetIds, bgmAssetId) {
-  const assetIds = paperAssetIds.concat([bgmAssetId])
+function createPaperScene(paperInterval, paperAssetIds, bgmAssetId, whistleSeAssetId) {
+  const assetIds = paperAssetIds.concat([bgmAssetId]).concat([whistleSeAssetId])
   const scene = new g.Scene({
     game: g.game,
     assetIds: assetIds,
   })
   scene.loaded.add(function() {
     const bgm = scene.assets[bgmAssetId].play()
-    autoPaper(scene, paperInterval, paperAssetIds, bgm)
+    autoPaper(scene, paperInterval, paperAssetIds, bgm, whistleSeAssetId)
   })
   return scene
 }
 
-function autoPaper(scene, interval, paperAssetIds, bgm) {
+function autoPaper(scene, interval, paperAssetIds, bgm, whistleSeAssetId) {
   if (paperAssetIds.length === 0) {
-    scene.setTimeout(() => {
-      bgm.stop()
-    }, 0)
+    // すべての紙芝居が終了したときの処理
+    bgm.stop()
+    scene.assets[whistleSeAssetId].play()
     return
   }
   let paperAssetId = paperAssetIds.shift()
@@ -167,7 +168,7 @@ function autoPaper(scene, interval, paperAssetIds, bgm) {
   })
   scene.append(paper)
   startTimer(scene, interval, () => {
-    autoPaper(scene, interval, paperAssetIds, bgm)
+    autoPaper(scene, interval, paperAssetIds, bgm, whistleSeAssetId)
   })
 }
 
