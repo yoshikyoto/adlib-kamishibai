@@ -50,6 +50,12 @@
 			"width": 500,
 			"height": 313,
 			"path": "image/frame.png"
+		},
+		"bgm": {
+			"type": "audio",
+			"path": "audio/bgm",
+			"systemId": "sound",
+			"duration": 103747
 		}
 	},
 	"environment": {
