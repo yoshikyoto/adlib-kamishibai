@@ -19,29 +19,28 @@ function main() {
   const titleScene = createTitleScene(TITLE_ASSET_ID, SUB_TITLE, BGM_ASSET_ID)
   // タイトルシーン表示
   g.game.pushScene(titleScene)
-  // BGM鳴らす
+  // 次のシーン移動時にBGMを止める必要があるので
+  // createTitleScene の外側で BGM を再生している
   var titleSceneBgm
   titleScene.loaded.add(() => {
     titleSceneBgm = titleScene.assets[BGM_ASSET_ID].play()
   })
 
   titleScene.setTimeout(() => {
-
     // ゲーム説明シーン生成
     const descriptionScene = createDescriptionScene(DESCRIPTION_FRAME_ASSET_ID)
     // ゲーム説明シーンへ移動
     titleScene.gotoScene(descriptionScene)
-    // BGMストップ
+    // ここで BGM を止める
     titleSceneBgm.stop()
     
     descriptionScene.setTimeout(() => {
-
       // 紙芝居シーン（最後のシーン）
-      const paperScene = createPaperScene(PAPER_INTERVAL, PAPER_ASSET_IDS)
+      const paperScene = createPaperScene(PAPER_INTERVAL, PAPER_ASSET_IDS, BGM_ASSET_ID)
       g.game.pushScene(paperScene)
 
-    }, DESCRIPTION_SECOND * 1000); // ゲーム説明の表示されている時間
-  }, TITLE_SECOND * 1000); // タイトルの表示されている秒数
+    }, DESCRIPTION_SECOND * 1000) // ゲーム説明の表示されている時間
+  }, TITLE_SECOND * 1000) // タイトルの表示されている秒数
 }
 
 /**
@@ -57,7 +56,7 @@ function createTitleScene(titleAssetId, subTitleText, bgmAssetId) {
     const title = new g.Sprite({
       scene: scene,
       src: scene.assets[titleAssetId],
-    });
+    })
     // どセンターに表示されるように
     title.x = (g.game.width - title.width) / 2
     title.y = (g.game.height - title.height) / 2
@@ -75,11 +74,11 @@ function createTitleScene(titleAssetId, subTitleText, bgmAssetId) {
       fontSize: 24,
       textColor: "black",
       textAlign: g.TextAlign.Center,
-    });
+    })
     // タイトルの右下に表示
     subTitle.x = title.x + title.width - subTitle.width
     subTitle.y = title.y + title.height + subTitle.height
-    scene.append(subTitle);
+    scene.append(subTitle)
   })
   return scene
 }
@@ -117,7 +116,7 @@ function createDescriptionScene(descriptionFrameAssetId) {
       // この x, y が決め打ちなのはあまり良くない
       x: 50,
       y: 50,
-    });
+    })
     descriptionFrame.append(description1)
 
     const description2 = new g.Label({
@@ -129,12 +128,11 @@ function createDescriptionScene(descriptionFrameAssetId) {
       // この x, y が決め打ちなのはあまり良くない
       x: 50,
       y: 100
-    });
+    })
     descriptionFrame.append(description2)
     
     scene.append(descriptionFrame)
   })  
-
 
   return scene
 }
@@ -142,31 +140,35 @@ function createDescriptionScene(descriptionFrameAssetId) {
 /**
  * 紙芝居のシーンを作成して返す
  */
-function createPaperScene(paperInterval, paperAssetIds) {
-  let scene = new g.Scene({
+function createPaperScene(paperInterval, paperAssetIds, bgmAssetId) {
+  const assetIds = paperAssetIds.concat([bgmAssetId])
+  const scene = new g.Scene({
     game: g.game,
-    assetIds: paperAssetIds,
-  });
+    assetIds: assetIds,
+  })
   scene.loaded.add(function() {
-    autoPaper(scene, paperInterval, paperAssetIds);
-  });
+    const bgm = scene.assets[bgmAssetId].play()
+    autoPaper(scene, paperInterval, paperAssetIds, bgm)
+  })
   return scene
 }
 
-function autoPaper(scene, interval, paperAssetIds) {
+function autoPaper(scene, interval, paperAssetIds, bgm) {
   if (paperAssetIds.length === 0) {
-    console.log("finish");
-    return;
+    scene.setTimeout(() => {
+      bgm.stop()
+    }, 0)
+    return
   }
-  let paperAssetId = paperAssetIds.shift();
+  let paperAssetId = paperAssetIds.shift()
   let paper = new g.Sprite({
     scene: scene,
     src: scene.assets[paperAssetId],
-  });
-  scene.append(paper);
-  startTimer(scene, interval, function() {
-    autoPaper(scene, interval, paperAssetIds);
-  });
+  })
+  scene.append(paper)
+  startTimer(scene, interval, () => {
+    autoPaper(scene, interval, paperAssetIds, bgm)
+  })
 }
 
 function startTimer(scene, second, onFinish) {
@@ -174,7 +176,7 @@ function startTimer(scene, second, onFinish) {
     game: g.game,
     fontFamily: g.FontFamily.SansSerif,
     size: 15,
-  });
+  })
   const timerLabel = new g.Label({
     scene: scene,
     font: timerFont,
@@ -182,21 +184,21 @@ function startTimer(scene, second, onFinish) {
     fontSize: 15,
     textColor: "black",
     textAlign: g.TextAlign.Right,
-  });
-  scene.append(timerLabel);
+  })
+  scene.append(timerLabel)
 
   // カウントダウン
   var timerInterval = scene.setInterval(function() {
-    second--;
-    timerLabel.text = String(second);
+    second--
+    timerLabel.text = String(second)
     // text を変更したら invalidate メソッドで再評価させないといけない
-    timerLabel.invalidate();
+    timerLabel.invalidate()
     // 0になったらタイマーを止める
     if(second === 0) {
-      scene.clearInterval(timerInterval);
-      onFinish();
+      scene.clearInterval(timerInterval)
+      onFinish()
     }
   }, 1000)
 }
 
-module.exports = main;
+module.exports = main
