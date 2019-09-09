@@ -5,7 +5,7 @@ function main() {
   // 定数
   var BGM_ASSET_ID = 'bgm'
   var TITLE_ASSET_ID = 'title'
-  var SUB_TITLE = '桃太郎編A'
+  var SUB_TITLE = '桃太郎（かんたん）'
   // 紙芝居のアセットIDたち
   var PAPER_ASSET_IDS = ['paper1', 'paper2', 'paper3', 'paper4']
   // タイトルが表示されている時間
