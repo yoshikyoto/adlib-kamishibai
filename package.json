@@ -3,12 +3,10 @@
   "version": "1.0.0",
   "description": "アドリブ紙芝居",
   "main": "main.js",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@akashic/akashic-cli": "^1.7.19",
-    "@akashic/akashic-sandbox": "^0.15.0",
-    "@akashic/bmpfont-generator": "^4.0.0"
+    "@akashic/akashic-sandbox": "^0.15.0"
   },
   "scripts": {
     "sandbox": "akashic-sandbox",
