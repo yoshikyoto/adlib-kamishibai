@@ -9,21 +9,19 @@ function main() {
   // 紙芝居のアセットIDたち
   const PAPER_ASSET_IDS = ['paper1', 'paper2', 'paper3', 'paper4']
   // タイトルが表示されている時間
-  const TITLE_SECOND = 10
+  const TITLE_SECOND = 3 // TODO 適切な時間に変える
   // 説明文の枠
   const DESCRIPTION_FRAME_ASSET_ID = 'frame'
   // ゲームの説明を表示している時間
-  const DESCRIPTION_SECOND = 10
+  const DESCRIPTION_SECOND = 3 // TODO 適切な時間に変える
   // 紙芝居の1ページあたりの秒数
-  const PAPER_INTERVAL = 10
+  const PAPER_INTERVAL = 5 // TODO 適切な時間に変える
   // 終了時に流れるホイッスルの音
   const WHISTLE_SE_ASSET_ID = 'whistle'
   // 数字のフォント画像
   const NUMBERS_IMAGE_ASSET_ID = 'numbersBlack'
   const NUMBERS_RED_IMAGE_ASSET_ID = 'numbersRed'
   const CLOCK_IMAGE_ASSET_ID = 'clock'
-
-  // 各シーンの生成
 
   // タイトルシーン生成
   const titleScene = createTitleScene(TITLE_ASSET_ID, SUB_TITLE, BGM_ASSET_ID)
@@ -192,26 +190,23 @@ function startTimer(scene, second, numberFont, numberRedFont, clockImageAssetId,
     x: g.game.width - 120,
   })
   scene.append(clock)
-  let timerFont = new g.DynamicFont({
-    game: g.game,
-    fontFamily: g.FontFamily.SansSerif,
-    size: 15,
-  })
   const timerLabel = new g.Label({
     scene: scene,
-    font: numberRedFont,
+    font: numberFont,
     text: String(second),
     fontSize: 36,
-    textColor: "black",
     textAlign: g.TextAlign.Right,
-    x: g.game.width - 70
+    x: g.game.width - 70,
+    width: 60,
   })
   scene.append(timerLabel)
 
   // カウントダウン
-  var timerInterval = scene.setInterval(function() {
+  const timerInterval = scene.setInterval(function() {
     second--
     timerLabel.text = String(second)
+    // 残り時間によってフォントを変える
+    timerLabel.font = second > 3 ? numberFont : numberRedFont
     // text を変更したら invalidate メソッドで再評価させないといけない
     timerLabel.invalidate()
     // 0になったらタイマーを止める
@@ -226,8 +221,8 @@ function getCountFontGlyphMap(width, height) {
   const map = {}
   for (var i = 0; i < 10; i++) {
     // 0 .. 9 の順に並んでいると簡単だが 1 .. 9 0 の順で並んでいるので
-    // 0 (charaxterCode = 48) だけ特別扱いする必要がある
-    var characterCode = i + 49
+    // 0 (characterCode = 48) だけ特別扱いする必要がある
+    var characterCode = 49 + i
     if (characterCode == 58) {
       characterCode = 48
     }
