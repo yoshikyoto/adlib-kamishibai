@@ -9,11 +9,11 @@ function main() {
   // 紙芝居のアセットIDたち
   var PAPER_ASSET_IDS = ['paper1', 'paper2', 'paper3', 'paper4']
   // タイトルが表示されている時間
-  var TITLE_SECOND = 5
+  var TITLE_SECOND = 10
   // 説明文の枠
   var DESCRIPTION_FRAME_ASSET_ID = 'frame'
   // ゲームの説明を表示している時間
-  var DESCRIPTION_SECOND = 5
+  var DESCRIPTION_SECOND = 10
   // 紙芝居の1ページあたりの秒数
   var PAPER_INTERVAL = 10
   var READY_START_SE_ASSET_ID = 'readyStart'
@@ -200,6 +200,7 @@ function createPaperScene(
         scene,
         paperInterval,
         paperAssetIds,
+        0,
         bgm,
         timeupSeAssetId,
         numberFont,
@@ -216,6 +217,7 @@ function autoPaper(
   scene,
   interval,
   paperAssetIds,
+  currentPage,
   bgm,
   timeupSeAssetId,
   numberFont,
@@ -223,7 +225,8 @@ function autoPaper(
   clockImageAssetId,
   endImageAssetId
 ) {
-  if (paperAssetIds.length === 0) {
+  var page = paperAssetIds.length
+  if (page <= currentPage) {
     // すべての紙芝居が終了したときの処理
     // bgmは鳴らさないことにした
     // bgm.stop()
@@ -243,18 +246,32 @@ function autoPaper(
     }, timeupSeAsset.duration + 1000)
     return
   }
-  let paperAssetId = paperAssetIds.shift()
+
+  // 紙芝居を表示
+  let paperAssetId = paperAssetIds[currentPage]
   let paper = new g.Sprite({
     scene: scene,
     src: scene.assets[paperAssetId],
   })
   scene.append(paper)
 
+  //
+  var pageLabel = new g.Label({
+    scene: scene,
+    font: numberFont,
+    text: String(currentPage + 1) + '/' + String(page),
+    fontSize: 36,
+    x: g.game.width - 100,
+    y: g.game.height - 40,
+  })
+  scene.append(pageLabel)
+
   startTimer(scene, interval, numberFont, numberRedFont, clockImageAssetId, function() {
     autoPaper(
       scene,
       interval,
       paperAssetIds,
+      currentPage + 1,
       bgm,
       timeupSeAssetId,
       numberFont,
@@ -269,24 +286,25 @@ function startTimer(scene, second, numberFont, numberRedFont, clockImageAssetId,
   var clock = new g.Sprite({
     scene: scene,
     src: scene.assets[clockImageAssetId],
-    x: g.game.width - 120,
+    x: g.game.width - 112,
+    y: 2
   })
   scene.append(clock)
   var timerLabel = new g.Label({
     scene: scene,
     font: numberFont,
-    text: String(second),
+    text: zeroPadding(second),
     fontSize: 36,
     textAlign: g.TextAlign.Right,
     x: g.game.width - 70,
-    width: 60,
+    y: 2,
   })
   scene.append(timerLabel)
 
   // カウントダウン
   var timerInterval = scene.setInterval(function() {
     second--
-    timerLabel.text = String(second)
+    timerLabel.text = zeroPadding(second)
     // 残り時間によってフォントを変える
     timerLabel.font = second > 3 ? numberFont : numberRedFont
     // text を変更したら invalidate メソッドで再評価させないといけない
@@ -299,14 +317,26 @@ function startTimer(scene, second, numberFont, numberRedFont, clockImageAssetId,
   }, 1000)
 }
 
+/**
+ * 数字を2桁になるように0埋めする
+ * @param n
+ * @returns {string}
+ */
+function zeroPadding(n) {
+  return ('0' + String(n)).slice(-2)
+}
+
 function getCountFontGlyphMap(width, height) {
   var map = {}
-  for (var i = 0; i < 10; i++) {
+  for (var i = 0; i < 11; i++) {
     // 0 .. 9 の順に並んでいると簡単だが 1 .. 9 0 の順で並んでいるので
     // 0 (characterCode = 48) だけ特別扱いする必要がある
     var characterCode = 49 + i
     if (characterCode === 58) {
       characterCode = 48
+    }
+    if (characterCode === 59) {
+      characterCode = 47
     }
     var key = String(characterCode)
     map[key] = {
