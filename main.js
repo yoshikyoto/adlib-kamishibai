@@ -16,8 +16,9 @@ function main() {
   const DESCRIPTION_SECOND = 1
   // 紙芝居の1ページあたりの秒数
   const PAPER_INTERVAL = 1
-  // 終了時に流れるホイッスルの音
+  const READY_START_SE_ASSET_ID = 'readyStart'
   const WHISTLE_SE_ASSET_ID = 'whistle'
+  const TIMEUP_SE_ASSET_ID = 'timeup'
   // 数字のフォント画像
   const NUMBERS_IMAGE_ASSET_ID = 'numbersBlack'
   const NUMBERS_RED_IMAGE_ASSET_ID = 'numbersRed'
@@ -49,7 +50,8 @@ function main() {
         PAPER_INTERVAL,
         PAPER_ASSET_IDS,
         BGM_ASSET_ID,
-        WHISTLE_SE_ASSET_ID,
+        READY_START_SE_ASSET_ID,
+        TIMEUP_SE_ASSET_ID,
         NUMBERS_IMAGE_ASSET_ID,
         NUMBERS_RED_IMAGE_ASSET_ID,
         CLOCK_IMAGE_ASSET_ID,
@@ -131,13 +133,14 @@ function createPaperScene(
   paperInterval,
   paperAssetIds,
   bgmAssetId,
-  whistleSeAssetId,
+  startSeAssetId,
+  timeupSeAssetId,
   numbersImageAssetId,
   numbersRedImageAssetId,
   clockImageAssetId,
   endImageAssetId
 ) {
-  const assetIds = paperAssetIds.concat([bgmAssetId, whistleSeAssetId])
+  const assetIds = paperAssetIds.concat([bgmAssetId, startSeAssetId, timeupSeAssetId])
     .concat([numbersImageAssetId, numbersRedImageAssetId, clockImageAssetId, endImageAssetId])
   const scene = new g.Scene({
     game: g.game,
@@ -168,7 +171,8 @@ function createPaperScene(
       paperInterval,
       paperAssetIds,
       bgm,
-      whistleSeAssetId,
+      startSeAssetId,
+      timeupSeAssetId,
       numberFont,
       numberRedFont,
       clockImageAssetId,
@@ -183,7 +187,8 @@ function autoPaper(
   interval,
   paperAssetIds,
   bgm,
-  whistleSeAssetId,
+  startSeAssetId,
+  timeupSeAssetId,
   numberFont,
   numberRedFont,
   clockImageAssetId,
@@ -200,7 +205,7 @@ function autoPaper(
     endImage.x = (g.game.width - endImage.width) / 2
     endImage.y = (g.game.height - endImage.height) / 2
     scene.append(endImage)
-    scene.assets[whistleSeAssetId].play()
+    scene.assets[timeupSeAssetId].play()
     return
   }
   let paperAssetId = paperAssetIds.shift()
@@ -215,7 +220,8 @@ function autoPaper(
       interval,
       paperAssetIds,
       bgm,
-      whistleSeAssetId,
+      startSeAssetId,
+      timeupSeAssetId,
       numberFont,
       numberRedFont,
       clockImageAssetId,
