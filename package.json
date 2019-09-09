@@ -6,7 +6,7 @@
   "dependencies": {},
   "devDependencies": {
     "@akashic/akashic-cli": "^1.7.19",
-    "@akashic/akashic-sandbox": "^0.15.0"
+    "@akashic/akashic-sandbox": "^0.15.7"
   },
   "scripts": {
     "sandbox": "akashic-sandbox",
