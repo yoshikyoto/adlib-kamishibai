@@ -43,13 +43,13 @@ function main() {
     titleScene.gotoScene(descriptionScene)
     // ここで BGM を止める
     titleSceneBgm.stop()
-    
+
     descriptionScene.setTimeout(() => {
       // 紙芝居シーン（最後のシーン）
       const paperScene = createPaperScene(
-        PAPER_INTERVAL, 
-        PAPER_ASSET_IDS, 
-        BGM_ASSET_ID, 
+        PAPER_INTERVAL,
+        PAPER_ASSET_IDS,
+        BGM_ASSET_ID,
         WHISTLE_SE_ASSET_ID,
         NUMBERS_IMAGE_ASSET_ID,
         NUMBERS_RED_IMAGE_ASSET_ID,
@@ -79,7 +79,7 @@ function createTitleScene(titleAssetId, subTitleText, bgmAssetId) {
     title.x = (g.game.width - title.width) / 2
     title.y = (g.game.height - title.height) / 2
     scene.append(title)
-    
+
     // サブタイトル
     const subTitle = new g.Label({
       scene: scene,
@@ -118,39 +118,8 @@ function createDescriptionScene(descriptionFrameAssetId) {
     // どセンターに表示されるように
     descriptionFrame.x = (g.game.width - descriptionFrame.width) / 2
     descriptionFrame.y = (g.game.height - descriptionFrame.height) / 2
-
-    const descriptionFont = new g.DynamicFont({
-      game: g.game,
-      fontFamily: g.FontFamily.SansSerif,
-      size: 24,
-    })
-
-    const description1 = new g.Label({
-      scene: scene,
-      font: descriptionFont,
-      text: '4枚の紙芝居が流れます',
-      fontSize: 24,
-      textColor: "black",
-      // この x, y が決め打ちなのはあまり良くない
-      x: 50,
-      y: 50,
-    })
-    descriptionFrame.append(description1)
-
-    const description2 = new g.Label({
-      scene: scene,
-      font: descriptionFont,
-      text: 'アドリブで乗り切れ！',
-      fontSize: 24,
-      textColor: "black",
-      // この x, y が決め打ちなのはあまり良くない
-      x: 50,
-      y: 100
-    })
-    descriptionFrame.append(description2)
-    
     scene.append(descriptionFrame)
-  })  
+  })
 
   return scene
 }
@@ -159,9 +128,9 @@ function createDescriptionScene(descriptionFrameAssetId) {
  * 紙芝居のシーンを作成して返す
  */
 function createPaperScene(
-  paperInterval, 
-  paperAssetIds, 
-  bgmAssetId, 
+  paperInterval,
+  paperAssetIds,
+  bgmAssetId,
   whistleSeAssetId,
   numbersImageAssetId,
   numbersRedImageAssetId,
