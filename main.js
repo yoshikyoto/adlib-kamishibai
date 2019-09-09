@@ -9,13 +9,13 @@ function main() {
   // 紙芝居のアセットIDたち
   const PAPER_ASSET_IDS = ['paper1', 'paper2', 'paper3', 'paper4']
   // タイトルが表示されている時間
-  const TITLE_SECOND = 1
+  const TITLE_SECOND = 5
   // 説明文の枠
   const DESCRIPTION_FRAME_ASSET_ID = 'frame'
   // ゲームの説明を表示している時間
-  const DESCRIPTION_SECOND = 1
+  const DESCRIPTION_SECOND = 5
   // 紙芝居の1ページあたりの秒数
-  const PAPER_INTERVAL = 1
+  const PAPER_INTERVAL = 5
   const READY_START_SE_ASSET_ID = 'readyStart'
   const WHISTLE_SE_ASSET_ID = 'whistle'
   const TIMEUP_SE_ASSET_ID = 'timeup'
@@ -232,7 +232,12 @@ function autoPaper(
     endImage.x = (g.game.width - endImage.width) / 2
     endImage.y = (g.game.height - endImage.height) / 2
     scene.append(endImage)
-    scene.assets[timeupSeAssetId].play()
+    const timeupSeAsset = scene.assets[timeupSeAssetId]
+    timeupSeAsset.play()
+    scene.setTimeout(() => {
+      // ゲーム終了
+      g.game.terminateGame()
+    }, timeupSeAsset.duration + 1000)
     return
   }
   let paperAssetId = paperAssetIds.shift()
