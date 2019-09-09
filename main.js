@@ -3,31 +3,31 @@
  */
 function main() {
   // 定数
-  const BGM_ASSET_ID = 'bgm'
-  const TITLE_ASSET_ID = 'title'
-  const SUB_TITLE = '桃太郎編A'
+  var BGM_ASSET_ID = 'bgm'
+  var TITLE_ASSET_ID = 'title'
+  var SUB_TITLE = '桃太郎編A'
   // 紙芝居のアセットIDたち
-  const PAPER_ASSET_IDS = ['paper1', 'paper2', 'paper3', 'paper4']
+  var PAPER_ASSET_IDS = ['paper1', 'paper2', 'paper3', 'paper4']
   // タイトルが表示されている時間
-  const TITLE_SECOND = 5
+  var TITLE_SECOND = 5
   // 説明文の枠
-  const DESCRIPTION_FRAME_ASSET_ID = 'frame'
+  var DESCRIPTION_FRAME_ASSET_ID = 'frame'
   // ゲームの説明を表示している時間
-  const DESCRIPTION_SECOND = 5
+  var DESCRIPTION_SECOND = 5
   // 紙芝居の1ページあたりの秒数
-  const PAPER_INTERVAL = 10
-  const READY_START_SE_ASSET_ID = 'readyStart'
-  const WHISTLE_SE_ASSET_ID = 'whistle'
-  const TIMEUP_SE_ASSET_ID = 'timeup'
+  var PAPER_INTERVAL = 10
+  var READY_START_SE_ASSET_ID = 'readyStart'
+  var WHISTLE_SE_ASSET_ID = 'whistle'
+  var TIMEUP_SE_ASSET_ID = 'timeup'
   // 数字のフォント画像
-  const NUMBERS_IMAGE_ASSET_ID = 'numbersBlack'
-  const NUMBERS_RED_IMAGE_ASSET_ID = 'numbersRed'
-  const CLOCK_IMAGE_ASSET_ID = 'clock'
-  const START_IMAGE_ASSET_ID = 'start'
-  const END_IMAGE_ASSET_ID = 'end'
+  var NUMBERS_IMAGE_ASSET_ID = 'numbersBlack'
+  var NUMBERS_RED_IMAGE_ASSET_ID = 'numbersRed'
+  var CLOCK_IMAGE_ASSET_ID = 'clock'
+  var START_IMAGE_ASSET_ID = 'start'
+  var END_IMAGE_ASSET_ID = 'end'
 
   // タイトルシーン生成
-  const titleScene = createTitleScene(TITLE_ASSET_ID, SUB_TITLE, BGM_ASSET_ID)
+  var titleScene = createTitleScene(TITLE_ASSET_ID, SUB_TITLE, BGM_ASSET_ID)
   // タイトルシーン表示
   g.game.pushScene(titleScene)
   // 次のシーン移動時にBGMを止めるので、
@@ -39,7 +39,7 @@ function main() {
 
   titleScene.setTimeout(function () {
     // ゲーム説明シーン生成
-    const descriptionScene = createDescriptionScene(DESCRIPTION_FRAME_ASSET_ID)
+    var descriptionScene = createDescriptionScene(DESCRIPTION_FRAME_ASSET_ID)
     // ゲーム説明シーンへ移動
     titleScene.gotoScene(descriptionScene)
     // ここで BGM を止める
@@ -47,7 +47,7 @@ function main() {
 
     descriptionScene.setTimeout(function() {
       // 紙芝居シーン（最後のシーン）
-      const paperScene = createPaperScene(
+      var paperScene = createPaperScene(
         PAPER_INTERVAL,
         PAPER_ASSET_IDS,
         BGM_ASSET_ID,
@@ -69,13 +69,13 @@ function main() {
  * タイトルのシーンを作成して返す
  */
 function createTitleScene(titleAssetId, subTitleText, bgmAssetId) {
-  const scene = new g.Scene({
+  var scene = new g.Scene({
     game: g.game,
     assetIds: [titleAssetId, bgmAssetId],
   })
   scene.loaded.add(function () {
     // タイトル
-    const title = new g.Sprite({
+    var title = new g.Sprite({
       scene: scene,
       src: scene.assets[titleAssetId],
     })
@@ -85,7 +85,7 @@ function createTitleScene(titleAssetId, subTitleText, bgmAssetId) {
     scene.append(title)
 
     // サブタイトル
-    const subTitle = new g.Label({
+    var subTitle = new g.Label({
       scene: scene,
       font: new g.DynamicFont({
         game: g.game,
@@ -109,13 +109,13 @@ function createTitleScene(titleAssetId, subTitleText, bgmAssetId) {
  * ゲームの説明のシーンを作成して返す
  */
 function createDescriptionScene(descriptionFrameAssetId) {
-  const scene = new g.Scene({
+  var scene = new g.Scene({
     game: g.game,
     assetIds: [descriptionFrameAssetId],
   })
 
   scene.loaded.add(function() {
-    const descriptionFrame = new g.Sprite({
+    var descriptionFrame = new g.Sprite({
       scene: scene,
       src: scene.assets[descriptionFrameAssetId],
     })
@@ -144,10 +144,10 @@ function createPaperScene(
   endImageAssetId
 ) {
   // シーンの生成
-  const assetIds = paperAssetIds.concat([bgmAssetId, startSeAssetId, timeupSeAssetId])
+  var assetIds = paperAssetIds.concat([bgmAssetId, startSeAssetId, timeupSeAssetId])
     .concat([numbersImageAssetId, numbersRedImageAssetId, clockImageAssetId])
     .concat([startImageAssetId, endImageAssetId])
-  const scene = new g.Scene({
+  var scene = new g.Scene({
     game: g.game,
     assetIds: assetIds,
   })
@@ -155,17 +155,17 @@ function createPaperScene(
   // 紙芝居シーン開始時の処理
   scene.loaded.add(function() {
     // BitmapFont はここで生成しておく
-    const width = 28 // フォントの幅と高さ
-    const height = 32
-    const glyphMap = getCountFontGlyphMap(width, height)
-    const numberFont = new g.BitmapFont({
+    var width = 28 // フォントの幅と高さ
+    var height = 32
+    var glyphMap = getCountFontGlyphMap(width, height)
+    var numberFont = new g.BitmapFont({
       src: scene.assets[numbersImageAssetId],
       map: glyphMap,
       defaultGlyphWidth: width,
       defaultGlyphHeight: height,
       missingGlyph: {}
     })
-    const numberRedFont = new g.BitmapFont({
+    var numberRedFont = new g.BitmapFont({
       src: scene.assets[numbersRedImageAssetId],
       map: glyphMap,
       defaultGlyphWidth: width,
@@ -174,15 +174,15 @@ function createPaperScene(
     })
 
     // 一枚目の画像を配置してその上にstartの文字を描画
-    const firstPaper = new g.Sprite({
+    var firstPaper = new g.Sprite({
       scene: scene,
       src: scene.assets[paperAssetIds[0]]
     })
     scene.append(firstPaper)
     // スタートの音と画像
-    const startSeAsset = scene.assets[startSeAssetId]
+    var startSeAsset = scene.assets[startSeAssetId]
     startSeAsset.play()
-    const startImage = new g.Sprite({
+    var startImage = new g.Sprite({
       scene: scene,
       src: scene.assets[startImageAssetId]
     })
@@ -193,7 +193,7 @@ function createPaperScene(
 
     // seの音が終わったらスタート
     scene.setTimeout(function() {
-      const bgm = scene.assets[bgmAssetId].play()
+      var bgm = scene.assets[bgmAssetId].play()
       autoPaper(
         scene,
         paperInterval,
@@ -224,7 +224,7 @@ function autoPaper(
   if (paperAssetIds.length === 0) {
     // すべての紙芝居が終了したときの処理
     bgm.stop()
-    const endImage = new g.Sprite({
+    var endImage = new g.Sprite({
       scene: scene,
       src: scene.assets[endImageAssetId],
     })
@@ -232,7 +232,7 @@ function autoPaper(
     endImage.x = (g.game.width - endImage.width) / 2
     endImage.y = (g.game.height - endImage.height) / 2
     scene.append(endImage)
-    const timeupSeAsset = scene.assets[timeupSeAssetId]
+    var timeupSeAsset = scene.assets[timeupSeAssetId]
     timeupSeAsset.play()
     scene.setTimeout(function() {
       // ゲーム終了
@@ -263,13 +263,13 @@ function autoPaper(
 }
 
 function startTimer(scene, second, numberFont, numberRedFont, clockImageAssetId, onFinish) {
-  const clock = new g.Sprite({
+  var clock = new g.Sprite({
     scene: scene,
     src: scene.assets[clockImageAssetId],
     x: g.game.width - 120,
   })
   scene.append(clock)
-  const timerLabel = new g.Label({
+  var timerLabel = new g.Label({
     scene: scene,
     font: numberFont,
     text: String(second),
@@ -281,7 +281,7 @@ function startTimer(scene, second, numberFont, numberRedFont, clockImageAssetId,
   scene.append(timerLabel)
 
   // カウントダウン
-  const timerInterval = scene.setInterval(function() {
+  var timerInterval = scene.setInterval(function() {
     second--
     timerLabel.text = String(second)
     // 残り時間によってフォントを変える
@@ -297,7 +297,7 @@ function startTimer(scene, second, numberFont, numberRedFont, clockImageAssetId,
 }
 
 function getCountFontGlyphMap(width, height) {
-  const map = {}
+  var map = {}
   for (var i = 0; i < 10; i++) {
     // 0 .. 9 の順に並んでいると簡単だが 1 .. 9 0 の順で並んでいるので
     // 0 (characterCode = 48) だけ特別扱いする必要がある
@@ -305,7 +305,7 @@ function getCountFontGlyphMap(width, height) {
     if (characterCode === 58) {
       characterCode = 48
     }
-    const key = String(characterCode)
+    var key = String(characterCode)
     map[key] = {
       width: width,
       height: height,
