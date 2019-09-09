@@ -194,7 +194,7 @@ function createPaperScene(
     // seの音が終わったらスタート
     scene.setTimeout(function() {
       var bgm = scene.assets[bgmAssetId]
-      // bgmは鳴らさない音にした
+      // 一旦bgmは鳴らさないことにした
       // bgm.play()
       autoPaper(
         scene,
