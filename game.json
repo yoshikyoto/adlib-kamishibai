@@ -80,6 +80,12 @@
 			"width": 364,
 			"height": 32,
 			"path": "image/numbersRed.png"
+		},
+		"end": {
+			"type": "image",
+			"width": 385,
+			"height": 384,
+			"path": "image/end.png"
 		}
 	},
 	"environment": {

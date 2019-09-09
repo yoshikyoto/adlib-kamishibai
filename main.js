@@ -9,19 +9,20 @@ function main() {
   // 紙芝居のアセットIDたち
   const PAPER_ASSET_IDS = ['paper1', 'paper2', 'paper3', 'paper4']
   // タイトルが表示されている時間
-  const TITLE_SECOND = 3 // TODO 適切な時間に変える
+  const TITLE_SECOND = 1
   // 説明文の枠
   const DESCRIPTION_FRAME_ASSET_ID = 'frame'
   // ゲームの説明を表示している時間
-  const DESCRIPTION_SECOND = 3 // TODO 適切な時間に変える
+  const DESCRIPTION_SECOND = 1
   // 紙芝居の1ページあたりの秒数
-  const PAPER_INTERVAL = 5 // TODO 適切な時間に変える
+  const PAPER_INTERVAL = 1
   // 終了時に流れるホイッスルの音
   const WHISTLE_SE_ASSET_ID = 'whistle'
   // 数字のフォント画像
   const NUMBERS_IMAGE_ASSET_ID = 'numbersBlack'
   const NUMBERS_RED_IMAGE_ASSET_ID = 'numbersRed'
   const CLOCK_IMAGE_ASSET_ID = 'clock'
+  const END_IMAGE_ASSET_ID = 'end'
 
   // タイトルシーン生成
   const titleScene = createTitleScene(TITLE_ASSET_ID, SUB_TITLE, BGM_ASSET_ID)
@@ -51,7 +52,8 @@ function main() {
         WHISTLE_SE_ASSET_ID,
         NUMBERS_IMAGE_ASSET_ID,
         NUMBERS_RED_IMAGE_ASSET_ID,
-        CLOCK_IMAGE_ASSET_ID
+        CLOCK_IMAGE_ASSET_ID,
+        END_IMAGE_ASSET_ID
       )
       g.game.pushScene(paperScene)
 
@@ -132,10 +134,11 @@ function createPaperScene(
   whistleSeAssetId,
   numbersImageAssetId,
   numbersRedImageAssetId,
-  clockImageAssetId
+  clockImageAssetId,
+  endImageAssetId
 ) {
   const assetIds = paperAssetIds.concat([bgmAssetId, whistleSeAssetId])
-    .concat([numbersImageAssetId, numbersRedImageAssetId, clockImageAssetId])
+    .concat([numbersImageAssetId, numbersRedImageAssetId, clockImageAssetId, endImageAssetId])
   const scene = new g.Scene({
     game: g.game,
     assetIds: assetIds,
@@ -143,7 +146,7 @@ function createPaperScene(
   scene.loaded.add(function() {
     const bgm = scene.assets[bgmAssetId].play()
     // BitmapFont はここで生成しておく
-    const width = 28
+    const width = 28 // フォントの幅と高さ
     const height = 32
     const glyphMap = getCountFontGlyphMap(width, height)
     const numberFont = new g.BitmapFont({
@@ -160,15 +163,43 @@ function createPaperScene(
       defaultGlyphHeight: height,
       missingGlyph: {}
     })
-    autoPaper(scene, paperInterval, paperAssetIds, bgm, whistleSeAssetId, numberFont, numberRedFont, clockImageAssetId)
+    autoPaper(
+      scene,
+      paperInterval,
+      paperAssetIds,
+      bgm,
+      whistleSeAssetId,
+      numberFont,
+      numberRedFont,
+      clockImageAssetId,
+      endImageAssetId
+    )
   })
   return scene
 }
 
-function autoPaper(scene, interval, paperAssetIds, bgm, whistleSeAssetId, numberFont, numberRedFont, clockImageAssetId) {
+function autoPaper(
+  scene,
+  interval,
+  paperAssetIds,
+  bgm,
+  whistleSeAssetId,
+  numberFont,
+  numberRedFont,
+  clockImageAssetId,
+  endImageAssetId
+) {
   if (paperAssetIds.length === 0) {
     // すべての紙芝居が終了したときの処理
     bgm.stop()
+    const endImage = new g.Sprite({
+      scene: scene,
+      src: scene.assets[endImageAssetId],
+    })
+    // センターに表示されるように
+    endImage.x = (g.game.width - endImage.width) / 2
+    endImage.y = (g.game.height - endImage.height) / 2
+    scene.append(endImage)
     scene.assets[whistleSeAssetId].play()
     return
   }
@@ -179,7 +210,17 @@ function autoPaper(scene, interval, paperAssetIds, bgm, whistleSeAssetId, number
   })
   scene.append(paper)
   startTimer(scene, interval, numberFont, numberRedFont, clockImageAssetId, () => {
-    autoPaper(scene, interval, paperAssetIds, bgm, whistleSeAssetId, numberFont, numberRedFont, clockImageAssetId)
+    autoPaper(
+      scene,
+      interval,
+      paperAssetIds,
+      bgm,
+      whistleSeAssetId,
+      numberFont,
+      numberRedFont,
+      clockImageAssetId,
+      endImageAssetId
+    )
   })
 }
 
@@ -223,7 +264,7 @@ function getCountFontGlyphMap(width, height) {
     // 0 .. 9 の順に並んでいると簡単だが 1 .. 9 0 の順で並んでいるので
     // 0 (characterCode = 48) だけ特別扱いする必要がある
     var characterCode = 49 + i
-    if (characterCode == 58) {
+    if (characterCode === 58) {
       characterCode = 48
     }
     const key = String(characterCode)
