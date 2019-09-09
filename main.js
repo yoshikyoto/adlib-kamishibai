@@ -279,7 +279,7 @@ function autoPaper(
     text: String(currentPage + 1) + '/' + String(page),
     fontSize: 36,
     x: g.game.width - 100,
-    y: g.game.height - 40,
+    y: 2,
   })
   scene.append(pageLabel)
 
@@ -301,11 +301,12 @@ function autoPaper(
 }
 
 function startTimer(scene, second, numberFont, numberRedFont, clockImageAssetId, onFinish) {
+  var timerY = 44
   var clock = new g.Sprite({
     scene: scene,
     src: scene.assets[clockImageAssetId],
     x: g.game.width - 112,
-    y: 2
+    y: timerY,
   })
   scene.append(clock)
   var timerLabel = new g.Label({
@@ -315,7 +316,7 @@ function startTimer(scene, second, numberFont, numberRedFont, clockImageAssetId,
     fontSize: 36,
     textAlign: g.TextAlign.Right,
     x: g.game.width - 70,
-    y: 2,
+    y: timerY,
   })
   scene.append(timerLabel)
 
