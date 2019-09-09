@@ -193,7 +193,9 @@ function createPaperScene(
 
     // seの音が終わったらスタート
     scene.setTimeout(function() {
-      var bgm = scene.assets[bgmAssetId].play()
+      var bgm = scene.assets[bgmAssetId]
+      // bgmは鳴らさない音にした
+      // bgm.play()
       autoPaper(
         scene,
         paperInterval,
@@ -223,7 +225,8 @@ function autoPaper(
 ) {
   if (paperAssetIds.length === 0) {
     // すべての紙芝居が終了したときの処理
-    bgm.stop()
+    // bgmは鳴らさないことにした
+    // bgm.stop()
     var endImage = new g.Sprite({
       scene: scene,
       src: scene.assets[endImageAssetId],
