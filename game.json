@@ -71,7 +71,7 @@
 		},
 		"numbersBlack": {
 			"type": "image",
-			"width": 364,
+			"width": 308,
 			"height": 32,
 			"path": "image/numbersBlack.png"
 		},
@@ -104,6 +104,18 @@
 			"path": "audio/timeup",
 			"systemId": "sound",
 			"duration": 1080
+		},
+		"numbersBlackRaw": {
+			"type": "image",
+			"width": 364,
+			"height": 32,
+			"path": "image/numbersBlackRaw.png"
+		},
+		"paperse": {
+			"type": "audio",
+			"path": "audio/paperse",
+			"systemId": "sound",
+			"duration": 792
 		}
 	},
 	"environment": {
