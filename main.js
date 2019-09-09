@@ -9,15 +9,16 @@ function main() {
   // 紙芝居のアセットIDたち
   var PAPER_ASSET_IDS = ['paper1', 'paper2', 'paper3', 'paper4']
   // タイトルが表示されている時間
-  var TITLE_SECOND = 10
+  var TITLE_SECOND = 5
   // 説明文の枠
   var DESCRIPTION_FRAME_ASSET_ID = 'frame'
   // ゲームの説明を表示している時間
-  var DESCRIPTION_SECOND = 10
+  var DESCRIPTION_SECOND = 5
   // 紙芝居の1ページあたりの秒数
   var PAPER_INTERVAL = 10
   var READY_START_SE_ASSET_ID = 'readyStart'
   var WHISTLE_SE_ASSET_ID = 'whistle'
+  var PAPER_SE_ASSET_ID = 'paperse'
   var TIMEUP_SE_ASSET_ID = 'timeup'
   // 数字のフォント画像
   var NUMBERS_IMAGE_ASSET_ID = 'numbersBlack'
@@ -51,6 +52,7 @@ function main() {
         PAPER_INTERVAL,
         PAPER_ASSET_IDS,
         BGM_ASSET_ID,
+        PAPER_SE_ASSET_ID,
         READY_START_SE_ASSET_ID,
         TIMEUP_SE_ASSET_ID,
         NUMBERS_IMAGE_ASSET_ID,
@@ -135,6 +137,7 @@ function createPaperScene(
   paperInterval,
   paperAssetIds,
   bgmAssetId,
+  paperSeAssetId,
   startSeAssetId,
   timeupSeAssetId,
   numbersImageAssetId,
@@ -144,14 +147,21 @@ function createPaperScene(
   endImageAssetId
 ) {
   // シーンの生成
-  var assetIds = paperAssetIds.concat([bgmAssetId, startSeAssetId, timeupSeAssetId])
-    .concat([numbersImageAssetId, numbersRedImageAssetId, clockImageAssetId])
-    .concat([startImageAssetId, endImageAssetId])
+  var assetIds = paperAssetIds.concat([
+    bgmAssetId,
+    startSeAssetId,
+    timeupSeAssetId,
+    numbersImageAssetId,
+    numbersRedImageAssetId,
+    clockImageAssetId,
+    startImageAssetId,
+    endImageAssetId,
+    paperSeAssetId,
+  ])
   var scene = new g.Scene({
     game: g.game,
     assetIds: assetIds,
   })
-
   // 紙芝居シーン開始時の処理
   scene.loaded.add(function() {
     // BitmapFont はここで生成しておく
@@ -200,6 +210,7 @@ function createPaperScene(
         scene,
         paperInterval,
         paperAssetIds,
+        paperSeAssetId,
         0,
         bgm,
         timeupSeAssetId,
@@ -217,6 +228,7 @@ function autoPaper(
   scene,
   interval,
   paperAssetIds,
+  paperSeAssetId,
   currentPage,
   bgm,
   timeupSeAssetId,
@@ -247,6 +259,11 @@ function autoPaper(
     return
   }
 
+  if (currentPage !== 0) {
+    // ページをめくる時は音を鳴らす
+    scene.assets[paperSeAssetId].play()
+  }
+
   // 紙芝居を表示
   let paperAssetId = paperAssetIds[currentPage]
   let paper = new g.Sprite({
@@ -255,7 +272,7 @@ function autoPaper(
   })
   scene.append(paper)
 
-  //
+  // ページ数の表示
   var pageLabel = new g.Label({
     scene: scene,
     font: numberFont,
@@ -271,6 +288,7 @@ function autoPaper(
       scene,
       interval,
       paperAssetIds,
+      paperSeAssetId,
       currentPage + 1,
       bgm,
       timeupSeAssetId,
