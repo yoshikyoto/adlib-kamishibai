@@ -23,6 +23,7 @@ function main() {
   const NUMBERS_IMAGE_ASSET_ID = 'numbersBlack'
   const NUMBERS_RED_IMAGE_ASSET_ID = 'numbersRed'
   const CLOCK_IMAGE_ASSET_ID = 'clock'
+  const START_IMAGE_ASSET_ID = 'start'
   const END_IMAGE_ASSET_ID = 'end'
 
   // タイトルシーン生成
@@ -55,6 +56,7 @@ function main() {
         NUMBERS_IMAGE_ASSET_ID,
         NUMBERS_RED_IMAGE_ASSET_ID,
         CLOCK_IMAGE_ASSET_ID,
+        START_IMAGE_ASSET_ID,
         END_IMAGE_ASSET_ID
       )
       g.game.pushScene(paperScene)
@@ -138,16 +140,20 @@ function createPaperScene(
   numbersImageAssetId,
   numbersRedImageAssetId,
   clockImageAssetId,
+  startImageAssetId,
   endImageAssetId
 ) {
+  // シーンの生成
   const assetIds = paperAssetIds.concat([bgmAssetId, startSeAssetId, timeupSeAssetId])
-    .concat([numbersImageAssetId, numbersRedImageAssetId, clockImageAssetId, endImageAssetId])
+    .concat([numbersImageAssetId, numbersRedImageAssetId, clockImageAssetId])
+    .concat([startImageAssetId, endImageAssetId])
   const scene = new g.Scene({
     game: g.game,
     assetIds: assetIds,
   })
+
+  // 紙芝居シーン開始時の処理
   scene.loaded.add(function() {
-    const bgm = scene.assets[bgmAssetId].play()
     // BitmapFont はここで生成しておく
     const width = 28 // フォントの幅と高さ
     const height = 32
@@ -166,18 +172,40 @@ function createPaperScene(
       defaultGlyphHeight: height,
       missingGlyph: {}
     })
-    autoPaper(
-      scene,
-      paperInterval,
-      paperAssetIds,
-      bgm,
-      startSeAssetId,
-      timeupSeAssetId,
-      numberFont,
-      numberRedFont,
-      clockImageAssetId,
-      endImageAssetId
-    )
+
+    // 一枚目の画像を配置してその上にstartの文字を描画
+    const firstPaper = new g.Sprite({
+      scene: scene,
+      src: scene.assets[paperAssetIds[0]]
+    })
+    scene.append(firstPaper)
+    // スタートの音と画像
+    const startSeAsset = scene.assets[startSeAssetId]
+    startSeAsset.play()
+    const startImage = new g.Sprite({
+      scene: scene,
+      src: scene.assets[startImageAssetId]
+    })
+    // センターに配置
+    startImage.x = (g.game.width - startImage.width) / 2
+    startImage.y = (g.game.height - startImage.height) / 2
+    scene.append(startImage)
+
+    // seの音が終わったらスタート
+    scene.setTimeout(() => {
+      const bgm = scene.assets[bgmAssetId].play()
+      autoPaper(
+        scene,
+        paperInterval,
+        paperAssetIds,
+        bgm,
+        timeupSeAssetId,
+        numberFont,
+        numberRedFont,
+        clockImageAssetId,
+        endImageAssetId
+      )
+    }, startSeAsset.duration)
   })
   return scene
 }
@@ -187,7 +215,6 @@ function autoPaper(
   interval,
   paperAssetIds,
   bgm,
-  startSeAssetId,
   timeupSeAssetId,
   numberFont,
   numberRedFont,
@@ -214,13 +241,13 @@ function autoPaper(
     src: scene.assets[paperAssetId],
   })
   scene.append(paper)
+
   startTimer(scene, interval, numberFont, numberRedFont, clockImageAssetId, () => {
     autoPaper(
       scene,
       interval,
       paperAssetIds,
       bgm,
-      startSeAssetId,
       timeupSeAssetId,
       numberFont,
       numberRedFont,
