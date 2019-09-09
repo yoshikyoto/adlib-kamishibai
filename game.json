@@ -83,9 +83,27 @@
 		},
 		"end": {
 			"type": "image",
-			"width": 385,
-			"height": 384,
+			"width": 388,
+			"height": 106,
 			"path": "image/end.png"
+		},
+		"start": {
+			"type": "image",
+			"width": 312,
+			"height": 106,
+			"path": "image/start.png"
+		},
+		"readyStart": {
+			"type": "audio",
+			"path": "audio/readyStart",
+			"systemId": "sound",
+			"duration": 1701
+		},
+		"timeup": {
+			"type": "audio",
+			"path": "audio/timeup",
+			"systemId": "sound",
+			"duration": 1080
 		}
 	},
 	"environment": {
