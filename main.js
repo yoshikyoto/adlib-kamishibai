@@ -15,7 +15,7 @@ function main() {
   // ゲームの説明を表示している時間
   const DESCRIPTION_SECOND = 5
   // 紙芝居の1ページあたりの秒数
-  const PAPER_INTERVAL = 5
+  const PAPER_INTERVAL = 10
   const READY_START_SE_ASSET_ID = 'readyStart'
   const WHISTLE_SE_ASSET_ID = 'whistle'
   const TIMEUP_SE_ASSET_ID = 'timeup'
@@ -33,11 +33,11 @@ function main() {
   // 次のシーン移動時にBGMを止めるので、
   // 簡単のために createTitleScene の外側で BGM を再生している
   var titleSceneBgm
-  titleScene.loaded.add(() => {
+  titleScene.loaded.add(function() {
     titleSceneBgm = titleScene.assets[BGM_ASSET_ID].play()
   })
 
-  titleScene.setTimeout(() => {
+  titleScene.setTimeout(function () {
     // ゲーム説明シーン生成
     const descriptionScene = createDescriptionScene(DESCRIPTION_FRAME_ASSET_ID)
     // ゲーム説明シーンへ移動
@@ -45,7 +45,7 @@ function main() {
     // ここで BGM を止める
     titleSceneBgm.stop()
 
-    descriptionScene.setTimeout(() => {
+    descriptionScene.setTimeout(function() {
       // 紙芝居シーン（最後のシーン）
       const paperScene = createPaperScene(
         PAPER_INTERVAL,
@@ -73,7 +73,7 @@ function createTitleScene(titleAssetId, subTitleText, bgmAssetId) {
     game: g.game,
     assetIds: [titleAssetId, bgmAssetId],
   })
-  scene.loaded.add(() => {
+  scene.loaded.add(function () {
     // タイトル
     const title = new g.Sprite({
       scene: scene,
@@ -114,7 +114,7 @@ function createDescriptionScene(descriptionFrameAssetId) {
     assetIds: [descriptionFrameAssetId],
   })
 
-  scene.loaded.add(() => {
+  scene.loaded.add(function() {
     const descriptionFrame = new g.Sprite({
       scene: scene,
       src: scene.assets[descriptionFrameAssetId],
@@ -192,7 +192,7 @@ function createPaperScene(
     scene.append(startImage)
 
     // seの音が終わったらスタート
-    scene.setTimeout(() => {
+    scene.setTimeout(function() {
       const bgm = scene.assets[bgmAssetId].play()
       autoPaper(
         scene,
@@ -234,7 +234,7 @@ function autoPaper(
     scene.append(endImage)
     const timeupSeAsset = scene.assets[timeupSeAssetId]
     timeupSeAsset.play()
-    scene.setTimeout(() => {
+    scene.setTimeout(function() {
       // ゲーム終了
       g.game.terminateGame()
     }, timeupSeAsset.duration + 1000)
@@ -247,7 +247,7 @@ function autoPaper(
   })
   scene.append(paper)
 
-  startTimer(scene, interval, numberFont, numberRedFont, clockImageAssetId, () => {
+  startTimer(scene, interval, numberFont, numberRedFont, clockImageAssetId, function() {
     autoPaper(
       scene,
       interval,
