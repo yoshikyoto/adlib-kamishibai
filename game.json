@@ -9,46 +9,16 @@
 			"path": "main.js",
 			"global": true
 		},
-		"paper1": {
-			"type": "image",
-			"width": 640,
-			"height": 360,
-			"path": "image/paper1.jpg"
-		},
-		"paper2": {
-			"type": "image",
-			"width": 640,
-			"height": 360,
-			"path": "image/paper2.jpg"
-		},
-		"paper3": {
-			"type": "image",
-			"width": 640,
-			"height": 360,
-			"path": "image/paper3.jpg"
-		},
-		"paper4": {
-			"type": "image",
-			"width": 640,
-			"height": 360,
-			"path": "image/paper4.jpg"
-		},
 		"title": {
 			"type": "image",
-			"width": 439,
-			"height": 175,
+			"width": 640,
+			"height": 360,
 			"path": "image/title.png"
-		},
-		"title2x": {
-			"type": "image",
-			"width": 878,
-			"height": 350,
-			"path": "image/title2x.png"
 		},
 		"frame": {
 			"type": "image",
-			"width": 500,
-			"height": 313,
+			"width": 476,
+			"height": 264,
 			"path": "image/frame.png"
 		},
 		"bgm": {
@@ -81,35 +51,59 @@
 			"height": 32,
 			"path": "image/numbersRed.png"
 		},
-		"end": {
-			"type": "image",
-			"width": 388,
-			"height": 106,
-			"path": "image/end.png"
-		},
 		"start": {
 			"type": "image",
-			"width": 312,
-			"height": 106,
+			"width": 640,
+			"height": 360,
 			"path": "image/start.png"
-		},
-		"readyStart": {
-			"type": "audio",
-			"path": "audio/readyStart",
-			"systemId": "sound",
-			"duration": 1701
-		},
-		"timeup": {
-			"type": "audio",
-			"path": "audio/timeup",
-			"systemId": "sound",
-			"duration": 1080
 		},
 		"paperse": {
 			"type": "audio",
 			"path": "audio/paperse",
 			"systemId": "sound",
 			"duration": 792
+		},
+		"end": {
+			"type": "image",
+			"width": 640,
+			"height": 360,
+			"path": "image/end.png"
+		},
+		"paper1": {
+			"type": "image",
+			"width": 640,
+			"height": 360,
+			"path": "image/paper1.png"
+		},
+		"paper2": {
+			"type": "image",
+			"width": 640,
+			"height": 360,
+			"path": "image/paper2.png"
+		},
+		"paper3": {
+			"type": "image",
+			"width": 640,
+			"height": 360,
+			"path": "image/paper3.png"
+		},
+		"paper4": {
+			"type": "image",
+			"width": 640,
+			"height": 360,
+			"path": "image/paper4.png"
+		},
+		"hajimari": {
+			"type": "audio",
+			"path": "audio/hajimari",
+			"systemId": "sound",
+			"duration": 1496
+		},
+		"oshimai": {
+			"type": "audio",
+			"path": "audio/oshimai",
+			"systemId": "sound",
+			"duration": 609
 		}
 	},
 	"environment": {

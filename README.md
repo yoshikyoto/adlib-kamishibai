@@ -19,3 +19,7 @@ TODO: https://akashic-games.github.io/guide/export-atsumaru.html
 ## サブタイトルを変更する
 
 `main.js` の `const SUB_TITLE` を変更してください。
+
+## ディレクトリ
+
+* `sound_source` : aacやoggに変換する前の音声データを配置する

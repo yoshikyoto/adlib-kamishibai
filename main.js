@@ -16,10 +16,10 @@ function main() {
   var DESCRIPTION_SECOND = 5
   // 紙芝居の1ページあたりの秒数
   var PAPER_INTERVAL = 10
-  var READY_START_SE_ASSET_ID = 'readyStart'
+  var READY_START_SE_ASSET_ID = 'hajimari'
   var WHISTLE_SE_ASSET_ID = 'whistle'
   var PAPER_SE_ASSET_ID = 'paperse'
-  var TIMEUP_SE_ASSET_ID = 'timeup'
+  var TIMEUP_SE_ASSET_ID = 'oshimai'
   // 数字のフォント画像
   var NUMBERS_IMAGE_ASSET_ID = 'numbersBlack'
   var NUMBERS_RED_IMAGE_ASSET_ID = 'numbersRed'
