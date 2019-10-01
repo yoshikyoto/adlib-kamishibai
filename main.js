@@ -265,8 +265,8 @@ function autoPaper(
   }
 
   // 紙芝居を表示
-  let paperAssetId = paperAssetIds[currentPage]
-  let paper = new g.Sprite({
+  var paperAssetId = paperAssetIds[currentPage]
+  var paper = new g.Sprite({
     scene: scene,
     src: scene.assets[paperAssetId],
   })
