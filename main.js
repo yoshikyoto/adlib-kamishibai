@@ -13,7 +13,7 @@ function main() {
   // 説明文の枠
   var DESCRIPTION_FRAME_ASSET_ID = 'frame'
   // ゲームの説明を表示している時間
-  var DESCRIPTION_SECOND = 5
+  var DESCRIPTION_SECOND = 10
   // 紙芝居の1ページあたりの秒数
   var PAPER_INTERVAL = 10
   var READY_START_SE_ASSET_ID = 'hajimari'
