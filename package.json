@@ -12,7 +12,7 @@
     "sandbox": "akashic-sandbox",
     "scan-asset": "akashic scan asset",
     "bmpfont-generator": "bmpfont-generator",
-    "build": "rm -rf ./dist && akashic export html --magnify --output ./dist"
+    "build": "rm -f ./dist.zip && akashic export html --output ./dist.zip --atsumaru"
   },
   "repository": {
     "type": "git",

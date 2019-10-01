@@ -1,4 +1,12 @@
 {
+	"environment": {
+		"sandbox-runtime": "2",
+		"niconico": {
+			"supportedModes": [
+				"single"
+			]
+		}
+	},
 	"width": 640,
 	"height": 360,
 	"fps": 30,
@@ -105,8 +113,5 @@
 			"systemId": "sound",
 			"duration": 609
 		}
-	},
-	"environment": {
-		"sandbox-runtime": "2"
 	}
 }

@@ -53,8 +53,8 @@ npm run sandbox
 npm run build
 ```
 
-`dist` ディレクトリができるのでこれを zip で圧縮し、
-RPGアツマールに投稿します。
+`dist.dip` というファイルが作成されます。
+これをRPGアツマールに投稿します。
 
 下記Akashicのドキュメントも参照してください。
 
