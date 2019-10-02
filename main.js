@@ -11,7 +11,7 @@ function main() {
   // タイトルが表示されている時間
   var TITLE_SECOND = 5
   // 説明文の枠
-  var DESCRIPTION_FRAME_ASSET_ID = 'frame'
+  var DESCRIPTION_FRAME_ASSET_ID = 'readme'
   // ゲームの説明を表示している時間
   var DESCRIPTION_SECOND = 10
   // 紙芝居の1ページあたりの秒数

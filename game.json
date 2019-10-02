@@ -23,12 +23,6 @@
 			"height": 360,
 			"path": "image/title.png"
 		},
-		"frame": {
-			"type": "image",
-			"width": 476,
-			"height": 264,
-			"path": "image/frame.png"
-		},
 		"bgm": {
 			"type": "audio",
 			"path": "audio/bgm",
@@ -112,6 +106,12 @@
 			"path": "audio/oshimai",
 			"systemId": "sound",
 			"duration": 609
+		},
+		"readme": {
+			"type": "image",
+			"width": 640,
+			"height": 360,
+			"path": "image/readme.png"
 		}
 	}
 }
