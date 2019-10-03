@@ -1,27 +1,30 @@
 {
-  "name": "adlib-kamishibai",
-  "version": "1.0.0",
-  "description": "アドリブ紙芝居",
-  "main": "main.js",
-  "dependencies": {},
-  "devDependencies": {
-    "@akashic/akashic-cli": "^1.7.19",
-    "@akashic/akashic-sandbox": "^0.15.7"
-  },
-  "scripts": {
-    "sandbox": "akashic-sandbox",
-    "scan-asset": "akashic scan asset",
-    "bmpfont-generator": "bmpfont-generator",
-    "build": "rm -f ./dist.zip && akashic export html --output ./dist.zip --atsumaru"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yoshikyoto/adlib-kamishibai.git"
-  },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/yoshikyoto/adlib-kamishibai/issues"
-  },
-  "homepage": "https://github.com/yoshikyoto/adlib-kamishibai#readme"
+	"name": "adlib-kamishibai",
+	"version": "1.0.0",
+	"description": "アドリブ紙芝居",
+	"main": "main.js",
+	"dependencies": {},
+	"devDependencies": {
+		"@akashic/akashic-cli": "^1.7.19",
+		"@akashic/akashic-sandbox": "^0.15.7"
+	},
+	"scripts": {
+		"sandbox": "akashic-sandbox",
+		"scan-asset": "akashic scan asset",
+		"bmpfont-generator": "bmpfont-generator",
+		"momotaro-normal": "cp ./stories/momotaro/01_normal/* ./image/",
+		"momotaro-easy": "momotaro-easy && cp ./stories/momotaro/02_easy/* ./image/",
+		"build": "rm -f ./dist.zip && akashic export html --output ./dist.zip --atsumaru",
+		"build momotaro-nornal": "momotaro-easy && build"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/yoshikyoto/adlib-kamishibai.git"
+	},
+	"author": "",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/yoshikyoto/adlib-kamishibai/issues"
+	},
+	"homepage": "https://github.com/yoshikyoto/adlib-kamishibai#readme"
 }
