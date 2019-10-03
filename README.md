@@ -61,6 +61,10 @@ npm run build
 * https://akashic-games.github.io/guide/export-atsumaru.html
 
 
-## ディレクトリ構造
+## ディレクトリ構造など
 
-* `sound_source` : aacやoggに変換する前の音声データが配置されています
+|ディレクトリ名|説明|
+|:--|:--|
+|sound_source|aacやoggに変換する前の音声データ|
+|introduction_image|アツマールに投稿する際に必要になるゲーム画面|
+|stories|派生作品の紙芝居画像たち|
